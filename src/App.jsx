@@ -1,37 +1,25 @@
-import { useEffect, useState } from "react";
-import fetchCurrentgeolocation from "./api/fetchCurrentgeolocation.js";
 import Heading from "./component/Heading.jsx";
+import { useState } from "react";
+import InfoPanel from './component/InfoPanel.jsx';
 import "./index.css"
 
 function App() {
-  const [cityName, setCityname] = useState('');
-  const [country, setCountry] = useState('India');
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const initializeLocation = async () => {
-
-      /*const coords = await fetchCurrentgeolocation();
-      console.log("Coordinates fetched:", coords);
-
-      // Example of fetching city and country based on coordinates
-      const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${coords.latitude}&longitude=${coords.longitude}&localityLanguage=en`);
-      const data = await response.json(); */
-    }
-
-    initializeLocation();
-  }, []);
+  const [weatherData, setWeatherData] = useState(null);
+  const [ForcastData, setForcastData] = useState('');
+  const [AirIndex, setAirIndex] = useState('');
+  /* useEffect(async () => {
+    // on load auto get the location and fill the page]
+    await WeatherUsingGeoloaction();
+  }, []); */
 
   return (
     <>
-      <div>
-        <Heading
-          Country={country}
-          Cityname={cityName}
-          setCityname={setCityname}
-          setCountry={setCountry}
-        />
-      </div>
+      <Heading setWeatherData={setWeatherData} ForcastData={ForcastData} setForcastData={setForcastData}
+        AirIndex={AirIndex} setAirIndex={setAirIndex} />
+      <InfoPanel
+        weatherData={weatherData}
+        ForcastData={ForcastData}
+        AirIndex={AirIndex} />
     </>
   );
 }
