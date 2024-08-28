@@ -1,6 +1,6 @@
 import React from 'react'
 import ForecastComponent from './ForecastComponent';
-import WeatherInfo from './weatherInfo';
+import WeatherInfo from './WeatherInfo';
 import Highlights from './Highlights';
 import HourlyUpdate from './HourlyUpdate';
 
