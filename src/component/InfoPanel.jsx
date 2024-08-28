@@ -8,7 +8,7 @@ const InfoPanel = ({ weatherData, AirIndex, ForcastData }) => {
     return (  /* h-fit */
 
         weatherData&&(
-        <div className='bg-black p-1'>
+        <div className='p-1'>
             <WeatherInfo weatherData={weatherData} />
             <Highlights weatherData={weatherData} AirIndex={AirIndex} />
             <ForecastComponent ForcastData={ForcastData} />
