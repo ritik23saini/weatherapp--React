@@ -83,7 +83,7 @@ export const airIndex = async () => {
     return null;
   }
 
-  const url = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_key}`;
+  const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_key}`;
 
   try {
     const response = await fetch(url);
@@ -149,7 +149,7 @@ export const WeatherUsingGeolocation = () => {
 
 // Function to fetch reverse geolocation data (city, country) based on latitude and longitude
 const fetchCurrentGeolocation = async () => {
-    const reversegeocoding_URL = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${API_key}`;
+    const reversegeocoding_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${API_key}`;
 
     try {
         const response = await fetch(reversegeocoding_URL);
