@@ -103,7 +103,7 @@ export const airIndex = async () => {
 
 export default FetchweatherUsingcity;
 
-/* Uncomment and use this function to fetch weather using geolocation
+/*use this function to fetch weather using geolocation
 export const WeatherUsingGeolocation = () => {
     const options = {
         enableHighAccuracy: true,
