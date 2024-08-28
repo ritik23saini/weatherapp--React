@@ -10,9 +10,9 @@ const Heading = ({ setWeatherData, ForcastData, setForcastData, setAirIndex, Air
 
   return (
     <>
-      <div className="flex justify-between gap-1 m-6 items-center">
-        <a href="/" className=" text-white font-bold md:text-2xl">Weather App</a>
-        <div className="border-2 pe-3 rounded-2xl flex items-center">
+      <div className="flex justify-between items-center">
+        <a href="/" className=" text-white font-bold ">Weather App</a>
+        <div className="border-2  rounded-2xl flex items-center">
           <input
             className="text-center text-black focus:outline-none rounded-l-2xl"
             type="text"
@@ -33,7 +33,7 @@ const Heading = ({ setWeatherData, ForcastData, setForcastData, setAirIndex, Air
           />
 
         </div>
-        <button className="ps-3 pe-3 bg-purple-600 text-center w-auto rounded-2xl"
+        <button className=" bg-purple-600 text-center rounded-2xl"
           onClick={() => {
             getCurrentGeolocation();
           }}>Current location</button>

@@ -3,8 +3,7 @@ let lat = '';
 let lon = '';
 
 // Function to fetch weather data using city name
-const FetchweatherUsingcity = async (cityname) => {
-
+export const FetchweatherUsingcity = async (cityname) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&units=metric&appid=${API_key}`;
 
   try {
@@ -16,13 +15,13 @@ const FetchweatherUsingcity = async (cityname) => {
 
     const data = await response.json();
     console.log('Current Weather Data:', data);
+
     lat = data.coord.lat;
     lon = data.coord.lon;
-    Fetchforecast();
     return data;
   } catch (error) {
-    console.log(error);
-    return "";
+    console.log('Error fetching weather data:', error);
+    return null;
   }
 };
 
@@ -37,85 +36,53 @@ export const Fetchforecast = async () => {
       throw new Error(`Error! Status: ${response.status}`);
     }
 
-    const forecast = await response.json(); 
-    const top5Temperatures = await forecast.list
-      .map(item => item) // Extract temperatures
-      .sort((a, b) => b - a)       // Sort descending
-      .slice(1, 6);                // Get top 5
+    const data = await response.json();
+    const Hourlyforecast = await data.list.slice(2, 7);
 
-    console.log('Top 5 Temperatures:', forecast);
-    return top5Temperatures;
+    const Forcast5days = await filter5days(data);
 
+    const forecast = {
+      Forcast5days,
+      Hourlyforecast
+    };
+
+    console.log(forecast)
+    return forecast;
   } catch (error) {
     console.error('Error fetching forecast data:', error);
     return null;
   }
-
 };
 
-/* export const WeatherUsingGeoloaction = () => {
-  const options = {
-    enableHighAccuracy: true,
-    timeout: 10000,
-    maximumAge: 0,
+// Function to filter 5-day forecast data
+export const filter5days = async (forecast) => {
+  const targetTime = "03:00:00"; // The specific time you want to match
+  const today = new Date(); // Current date
+
+  // Function to add days to the current date
+  const addDays = (date, days) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   };
 
-  function success(pos) {
-    const crd = pos.coords;
-    console.log("Your current position is:");
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`Accuracy: ${crd.accuracy} meters.`);
+  // Filter the data to get entries with the target time for the next 5 days
+  const forcast5day = forecast.list.filter(entry => {
+    const entryDate = new Date(entry.dt_txt);
+    const entryTime = entry.dt_txt.split(" ")[1];
+    return entryTime === targetTime && entryDate > today && entryDate <= addDays(today, 5);
+  });
 
-    fetchCurrentgeolocation(crd);
-  }
+  return forcast5day;
+};
 
-  function error(err) {
-    let errorMessage = 'An unknown error occurred.';
-    switch (err.code) {
-      case err.PERMISSION_DENIED:
-        errorMessage = 'User denied the request for Geolocation.';
-        break;
-      case err.POSITION_UNAVAILABLE:
-        errorMessage = 'Location information is unavailable.';
-        break;
-      case err.TIMEOUT:
-        errorMessage = 'The request to get user location timed out.';
-        break;
-    }
-    console.warn(`ERROR(${err.code}): ${errorMessage}`);
-  }
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(success, error, options);
-  } else {
-    console.log('Geolocation is not supported by this browser.');
-  }
-}
-
-// Function to fetch the reverse geolocation data (city, country) based on latitude and longitude
-const fetchCurrentgeolocation = async () => {
-  const reversegeocoding_URL = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${API_key}`;
-
-  try {
-    const response = await fetch(reversegeocoding_URL);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('Reverse Geocoding Data:', data);
-    return data;
-  } catch (error) {
-    console.error('Error fetching geolocation data:', error);
+// Function to fetch air quality index
+export const airIndex = async () => {
+  if (!lat || !lon) {
+    console.error('Latitude and Longitude are required to fetch air index.');
     return null;
   }
-} */
 
-
-
-export const airIndex = async () => {
   const url = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_key}`;
 
   try {
@@ -128,11 +95,75 @@ export const airIndex = async () => {
     const airIndex = await response.json();
     console.log('Air Index:', airIndex);
     return airIndex;
-  }
-  catch (error) {
+  } catch (error) {
     console.error('Error fetching air quality data:', error);
+    return null;
   }
+};
 
-
-}
 export default FetchweatherUsingcity;
+
+/* Uncomment and use this function to fetch weather using geolocation
+export const WeatherUsingGeolocation = () => {
+    const options = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+    };
+
+    function success(pos) {
+        const crd = pos.coords;
+        console.log("Your current position is:");
+        console.log(`Latitude : ${crd.latitude}`);
+        console.log(`Longitude: ${crd.longitude}`);
+        console.log(`Accuracy: ${crd.accuracy} meters.`);
+
+        lat = crd.latitude;
+        lon = crd.longitude;
+
+        fetchCurrentGeolocation();
+    }
+
+    function error(err) {
+        let errorMessage = 'An unknown error occurred.';
+        switch (err.code) {
+            case err.PERMISSION_DENIED:
+                errorMessage = 'User denied the request for Geolocation.';
+                break;
+            case err.POSITION_UNAVAILABLE:
+                errorMessage = 'Location information is unavailable.';
+                break;
+            case err.TIMEOUT:
+                errorMessage = 'The request to get user location timed out.';
+                break;
+        }
+        console.warn(`ERROR(${err.code}): ${errorMessage}`);
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error, options);
+    } else {
+        console.log('Geolocation is not supported by this browser.');
+    }
+};
+
+// Function to fetch reverse geolocation data (city, country) based on latitude and longitude
+const fetchCurrentGeolocation = async () => {
+    const reversegeocoding_URL = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${API_key}`;
+
+    try {
+        const response = await fetch(reversegeocoding_URL);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Reverse Geocoding Data:', data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching geolocation data:', error);
+        return null;
+    }
+};
+*/

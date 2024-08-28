@@ -13,14 +13,14 @@ function App() {
   }, []); */
 
   return (
-    <>
+    <div className="grid gap-5 mx-1 p-2 ">
       <Heading setWeatherData={setWeatherData} ForcastData={ForcastData} setForcastData={setForcastData}
         AirIndex={AirIndex} setAirIndex={setAirIndex} />
       <InfoPanel
         weatherData={weatherData}
         ForcastData={ForcastData}
         AirIndex={AirIndex} />
-    </>
+    </div>
   );
 }
 

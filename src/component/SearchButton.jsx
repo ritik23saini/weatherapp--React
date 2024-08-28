@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from 'react';
-import FetchweatherUsingcity,{ Fetchforecast, airIndex } from "../api/Fetchweatherinfo.js";
+import FetchweatherUsingcity, { Fetchforecast, airIndex } from "../api/Fetchweatherinfo.js";
 
 const SearchButton = ({ cityName, setWeatherData, setError, setForcastData, setAirIndex }) => {
 
@@ -16,7 +16,7 @@ const SearchButton = ({ cityName, setWeatherData, setError, setForcastData, setA
         setIsLoading(true);
 
         const weatherdata = await FetchweatherUsingcity(cityName);
-        const forcastdata = weatherdata ? await Fetchforecast(weatherdata) : null;
+        const forcastdata= weatherdata ? await Fetchforecast() : null;
         const airindexdata = weatherdata ? await airIndex() : null;
 
         setIsLoading(false);
@@ -25,6 +25,7 @@ const SearchButton = ({ cityName, setWeatherData, setError, setForcastData, setA
             setWeatherData(weatherdata);
             setForcastData(forcastdata);
             setAirIndex(airindexdata);
+            console.log(forcastdata)
         }
         else {
             setError('Unable to fetch data.');

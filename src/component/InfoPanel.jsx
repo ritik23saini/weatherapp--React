@@ -1,20 +1,20 @@
 import React from 'react'
-import { Forecast } from './forecast';
+import ForecastComponent from './ForecastComponent';
 import WeatherInfo from './weatherInfo';
 import Highlights from './Highlights';
-import { HourlyUpdate } from './HourlyUpdate';
+import HourlyUpdate from './HourlyUpdate';
 
 const InfoPanel = ({ weatherData, AirIndex, ForcastData }) => {
     return (  /* h-fit */
 
-        weatherData && (
-            <div className="h-screen grid md:grid-cols-6 grid-rows-3 min-w-[510px] gap-2 p-2 grid-cols-1">
-                <WeatherInfo weatherData={weatherData} />
-                <Highlights weatherData={weatherData} AirIndex={AirIndex} />
-                <Forecast ForcastData={ForcastData} />
-                <HourlyUpdate />
-            </div>
-        )
+        weatherData&&(
+        <div className='bg-black p-1'>
+            <WeatherInfo weatherData={weatherData} />
+            <Highlights weatherData={weatherData} AirIndex={AirIndex} />
+            <ForecastComponent ForcastData={ForcastData} />
+            <HourlyUpdate ForcastData={ForcastData} />
+        </div>
+    )
     );
 }
 

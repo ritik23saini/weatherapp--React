@@ -2,7 +2,7 @@ import React from 'react'
 
 const WeatherInfo = ({weatherData}) => {
   return (
-    <div className=" bg-purple-600 m-5 p-4 rounded-xl sm:text-lg">
+    <div className=" bg-purple-600 m-5 p-4 rounded-xl ">
                     <p>Now</p>
                     <p>Weather in {weatherData.name}</p>
                     
