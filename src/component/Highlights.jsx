@@ -1,4 +1,10 @@
 import React from 'react';
+import humidity from '../assets/humidity.png';
+import sunrise from '../assets/sunrise.png';
+import sunset from '../assets/sunset.png';
+import pressure from '../assets/pressure.png';
+import airIndex from '../assets/airIndex.png';
+import visibility from '../assets/view.png'
 
 const Highlights = ({ weatherData, AirIndex }) => {
     // Function to convert UNIX timestamp to a readable time
@@ -16,11 +22,11 @@ const Highlights = ({ weatherData, AirIndex }) => {
                 <div className='  bg-slate-700 p-5 m-4 rounded-2xl  '>
                     <div className=' font-bold text-center items-center'>Sunrise & Sunset</div>
                     <div className='    mt-10 items-center '>
-                        <img className="  w-10 sm:w-5" alt="Weather icon" src="http://localhost:5173/images/sunrise.png" />
+                        <img className="  w-10 sm:w-5" alt="Weather icon" src={sunrise} />
                         <div >
                             {convertToTime(weatherData.sys.sunrise)}
                         </div>
-                        <img className="w-10 sm:w-5" alt="Weather icon" src="http://localhost:5173/images/sunset.png" />
+                        <img className="w-10 sm:w-5" alt="Weather icon" src={sunset} />
                         <div className=''>
                             {convertToTime(weatherData.sys.sunset)}
                         </div>
@@ -28,7 +34,7 @@ const Highlights = ({ weatherData, AirIndex }) => {
                     </div>
                 </div>
                 <div className=' bg-slate-700 p-5 m-4 rounded-2xl'>
-                    <img className="w-10" alt="Weather icon" src="http://localhost:5173/images/humidity.png" />
+                    <img className="w-10" alt="Weather icon" src={airIndex}/>
                     <div className=''>
                         <p>Air Quality index:</p>
                         <p> SO<sub>2</sub>:{AirIndex.list[0].components.pm2_5}</p>
@@ -45,16 +51,16 @@ const Highlights = ({ weatherData, AirIndex }) => {
             <div className=' flex gap-1 justify-evenly items-center '>
 
                 <div className=' bg-slate-700 p-5 m-4 rounded-2xl'>
-                    <img className=" w-10" alt="Weather icon" src="http://localhost:5173/images/humidity.png" />
+                    <img className=" w-10" alt="Weather icon" src={humidity} />
                     <p>Humidity: {weatherData.main.humidity}%</p>
                 </div>
                 <div className=' bg-slate-700 p-5 m-4 rounded-2xl'>
-                    <img className="w-10" alt="Weather icon" src="http://localhost:5173/images/pressure.png" />
+                    <img className="w-10" alt="Weather icon" src={pressure} />
                     <p>Pressure: {weatherData.main.pressure} hPa</p>
 
                 </div>
                 <div className=' bg-slate-700 p-5 m-4 rounded-2xl'>
-                    <img className="w-10" alt="Weather icon" src="http://localhost:5173/images/view.png" />
+                    <img className="w-10" alt="Weather icon" src={visibility} />
                     <p>Visibility: {weatherData.visibility / 1000} km</p>
                 </div>
 

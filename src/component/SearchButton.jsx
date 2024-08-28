@@ -1,6 +1,7 @@
 import { useState } from "react";
 import React from 'react';
 import FetchweatherUsingcity, { Fetchforecast, airIndex } from "../api/Fetchweatherinfo.js";
+import search from "../assets/search.svg";
 
 const SearchButton = ({ cityName, setWeatherData, setError, setForcastData, setAirIndex }) => {
 
@@ -16,7 +17,7 @@ const SearchButton = ({ cityName, setWeatherData, setError, setForcastData, setA
         setIsLoading(true);
 
         const weatherdata = await FetchweatherUsingcity(cityName);
-        const forcastdata= weatherdata ? await Fetchforecast() : null;
+        const forcastdata = weatherdata ? await Fetchforecast() : null;
         const airindexdata = weatherdata ? await airIndex() : null;
 
         setIsLoading(false);
@@ -34,13 +35,16 @@ const SearchButton = ({ cityName, setWeatherData, setError, setForcastData, setA
     };
 
     return (
-        <button
-            className="text-black sm:w-14 sm:h-6 rounded-2xl ml-2"
-            onClick={handleSearch}
-            disabled={isLoading}
-        >
-            {isLoading ? 'Loading...' : 'Search'}
-        </button>
+        
+            <button
+                className="text-black rounded-2xl  px-2"
+                onClick={handleSearch}
+                disabled={isLoading}
+            >
+                {isLoading ? 'Loading...' : <img className=' w-5'src={search}></img>}
+            </button>
+
+       
     );
 };
 
