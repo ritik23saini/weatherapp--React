@@ -119,7 +119,7 @@ export const WeatherUsingGeolocation = async () => {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, options);
     });
-  };
+  }
 
   try {
     const pos = await getCurrentPosition();
