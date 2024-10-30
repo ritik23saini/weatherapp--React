@@ -1,6 +1,9 @@
 import Heading from "./component/Heading.jsx";
 import React, { useState, useEffect, useRef } from "react";
-import InfoPanel from './component/InfoPanel.jsx';
+import ForecastComponent from './component/ForecastComponent';
+import WeatherInfo from './component/WeatherInfo';
+import Highlights from './component/Highlights';
+import HourlyUpdate from './component/HourlyUpdate';
 import "./index.css";
 import FetchweatherUsingcity, { airIndex, Fetchforecast, WeatherUsingGeolocation } from "./api/Fetchweatherinfo";
 
@@ -34,7 +37,7 @@ function App() {
           setWeatherData(weatherdata);
           setForcastData(forcastdata);
           setAirIndex(airindexdata);
-        
+
         } else {
           setError('Unable to fetch data.');
         }
@@ -48,7 +51,7 @@ function App() {
   }, []);
 
   return (
-    <div className="grid gap-5 mx-1 p-2">
+    <div className=" mt-3 p-3">
       <Heading
         cityName={cityName}
         setCityname={setCityname}
@@ -60,11 +63,21 @@ function App() {
         setForcastData={setForcastData}
         setAirIndex={setAirIndex}
       />
-      <InfoPanel
-        weatherData={weatherData}
-        ForcastData={ForcastData}
-        AirIndex={AirIndex}
-      />
+      {/* Info Panel */}
+      {weatherData && (
+        <div className='  mt-3 py-1 md:grid md:grid-cols-6 gap-1'>
+          <div className="  h-[60%] m-4 md:col-span-2 xl:col-span-1">
+            <WeatherInfo weatherData={weatherData} />
+            <ForecastComponent ForcastData={ForcastData} />
+          </div>
+          <div className=" m-4 md:col-span-4 xl:col-span-5 ">
+            <Highlights weatherData={weatherData} AirIndex={AirIndex} />
+            <HourlyUpdate ForcastData={ForcastData} />
+
+          </div>
+        </div>
+
+      )}
     </div>
   );
 }

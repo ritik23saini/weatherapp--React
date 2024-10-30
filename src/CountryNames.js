@@ -982,5 +982,3 @@ const CountryNames = [
 ]
 
 export default CountryNames;
-
-

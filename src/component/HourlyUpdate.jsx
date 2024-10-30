@@ -12,23 +12,22 @@ const HourlyUpdate = ({ ForcastData }) => {
     };
 
     return (
-        <div className=" m-5  bg-purple-300 rounded-2xl">
-            <div className='block m-2 p-2'>Today</div>
-            <div className='flex  m-2 p-2 justify-evenly'>
+        <div className=" h-2/4 bg-purple-300 rounded-2xl ">
+            <div className='mx-4 p-2 font-bold text-xl'>Hourly Updates</div>
+            <div className=' flex  '>
                 {ForcastData.Hourlyforecast.map((data, index) => {
                     // Get the time for the current forecast item
                     const time = getTime(data.dt_txt);
 
                     return (
-                        <div key={index} className=' bg-slate-600 rounded-xl flex mb-3 p-1'>
-                            <div className="grid items-center">
-                                <div className="font-bold">{time}</div>
+                        <div key={index} className=' md:w-[15%] flex  bg-slate-700 shadow-md rounded-xl mx-auto md:mt-10 p-5'>
+                            <div className="flex flex-col ">
+                                <div className="text-sm font-bold">{time}</div>
                                 <img
                                     src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
                                     alt={data.weather[0].description}
-                                    className="ml-4"
                                 />
-                                <div className="text-xl font-bold">{data.main.temp}°C</div>
+                                <div className="text-sm lg:text-lg font-bold">{data.main.temp}°C</div>
                             </div>
                         </div>
                     );

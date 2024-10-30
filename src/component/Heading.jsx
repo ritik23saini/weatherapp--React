@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import search from "../assets/search.svg";
-import FetchweatherUsingcity, { WeatherUsingGeolocation,airIndex, Fetchforecast } from "../api/Fetchweatherinfo";
+import FetchweatherUsingcity, { WeatherUsingGeolocation, airIndex, Fetchforecast } from "../api/Fetchweatherinfo";
 
-const Heading = ({ cityName, setIsLoading,isLoading,setCityname, error, setError, setWeatherData, setForcastData, setAirIndex }) => {
-  
+const Heading = ({ cityName, setIsLoading, isLoading, setCityname, error, setError, setWeatherData, setForcastData, setAirIndex }) => {
+
 
   const handleSearch = async () => {
-    if (cityName=== '') {
+    if (cityName === '') {
       setError('Please enter a valid city');
       return;
     }
@@ -36,11 +36,11 @@ const Heading = ({ cityName, setIsLoading,isLoading,setCityname, error, setError
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <a href="/" className="text-white font-bold">Weather App</a>
-        <div className="border-2 rounded-2xl flex items-center">
+      <div className="flex justify-between p-1 items-center" >
+        <a href="/" className="text-white text-3xl font-bold">Weather App</a>
+        <div className="flex justify-center rounded-lg bg-white items-center px-3">
           <input
-            className="text-center text-black focus:outline-none rounded-l-2xl"
+            className="text-center outline-none"
             type="text"
             id="city"
             name="city"
@@ -49,18 +49,18 @@ const Heading = ({ cityName, setIsLoading,isLoading,setCityname, error, setError
             onChange={(event) => setCityname(event.target.value)}
           />
           <button
-            className="text-black rounded-2xl px-2"
+            className="text-black rounded-lg px-2"
             onClick={handleSearch}
             disabled={isLoading}
           >
-            {isLoading ? 'Loading...' : <img className='w-5' src={search} alt="search" />}
+            {isLoading ? 'Loading...'/* <Skeleton/> */ : <img className='w-5' src={search} alt="search" />}
           </button>
         </div>
         <button
-          className="bg-purple-600 text-center rounded-2xl"
+          className="bg-purple-600 px-2 rounded-lg"
           onClick={WeatherUsingGeolocation}
         >
-          Current location
+          Get location
         </button>
       </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
