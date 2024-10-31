@@ -6,9 +6,11 @@ export const ContextProvider = ({ children }) => {
   const [ForcastData, setForcastData] = useState(null);
   const [AirIndex, setAirIndex] = useState('');
   const [cityName, setCityname] = useState('');
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <weatherContext.Provider value={{ weatherData, setWeatherData, ForcastData, setForcastData, AirIndex, setAirIndex, cityName, setCityname }}>
+    <weatherContext.Provider value={{ weatherData, setWeatherData, ForcastData, setForcastData, AirIndex, setAirIndex, cityName, setCityname ,error, setError,isLoading, setIsLoading}}>
       {children}
     </weatherContext.Provider>
   );

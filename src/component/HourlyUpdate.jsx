@@ -14,25 +14,23 @@ const HourlyUpdate = () => {
     const { ForcastData } = useContext(weatherContext);
 
     return (
-        <div className="bg-purple-300 rounded-2xl">
-            <div className='mt-3 mx-2 p-2 font-bold text-xl'>Hourly Updates</div>
+        <div className=" md: h-[40%] flex flex-col  bg-purple-300 mt-5 rounded-2xl text-xl">
+            {/* Header */}
+            <div className="mt-3 mx-2 p-2 font-bold text-xl">Hourly Updates</div>
 
-            {ForcastData.Hourlyforecast.map((data) => {
-                // Get the time for the current forecast item
-                const time = getTime(data.dt_txt);
-                return (
-                    <div key={data.dt} className='inline-grid m-5 p-1 rounded-lg bg-white text-center'>
-                        <div className='grid justify-evenly items-center'>
+            {/* Content taking remaining height */}
+            <div className='flex-grow flex justify-evenly items-center '>
+                {ForcastData.Hourlyforecast.map((data) => {
+                    const time = getTime(data.dt_txt);
+                    return (
+                        <div key={data.dt} className='rounded-xl gap-1 p-1 md:gap-7 bg-white sm:m-2 sm:p-4 inline-grid md:grid items-center'>
                             <div className="text-sm font-bold">{time}</div>
-                            <img
-                                src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
-                                alt={data.weather[0].description}
-                            />
+                            <img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`} alt={data.weather[0].description} />
                             <div className="text-sm lg:text-lg font-bold">{data.main.temp}°C</div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
+            </div>
         </div>
     );
 };

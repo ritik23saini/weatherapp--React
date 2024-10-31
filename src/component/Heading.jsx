@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import search from "../assets/search.svg";
 import { FetchweatherUsingcity, FetchweatherUsingGeolocation, airIndex, Fetchforecast } from "../api/Fetchweatherinfo";
 import { weatherContext } from '../ContextApi/WeatherContext';
 
-const Heading = ({ setIsLoading, isLoading, error, setError }) => {
+const Heading = () => {
 
-  const { setWeatherData, setForcastData, setAirIndex, cityName, setCityname } = useContext(weatherContext);
+  const { setWeatherData, setForcastData, setAirIndex, cityName, setCityname ,error, setError,isLoading, setIsLoading} = useContext(weatherContext);
 
   const getCurrentPosition = async () => {
 
@@ -65,17 +65,22 @@ const Heading = ({ setIsLoading, isLoading, error, setError }) => {
       setError('An error occurred while fetching data.');
     }
   };
+  const inputRef = useRef(null);
 
+  const handleDivClick = () => {
+    inputRef.current.focus();
+  };
   return (
     <>
-      <div className="inline-grid gap-2 sm:flex sm:justify-between sm:p-1 sm:items-center" >
-        <a href="/" className="text-white text-3xl font-bold">Weather App</a>
-        <div className="flex justify-center rounded-lg bg-white items-center px-3">
+      <div className=" m-5 gap-2 sm:flex justify-between sm:p-1 items-baseline" >
+        <a href="/" className="text-white text-3xl font-bold  text-center block"> Weather App</a>
+        <div onClick={handleDivClick} className=" flex justify-center rounded-lg bg-white items-center px-3">
           <input
             className="text-center outline-none"
             type="text"
             id="city"
             name="city"
+            ref={inputRef}
             placeholder="Enter City Name"
             value={cityName}
             onChange={(event) => setCityname(event.target.value)}
@@ -88,12 +93,10 @@ const Heading = ({ setIsLoading, isLoading, error, setError }) => {
             {isLoading ? 'Loading...' : <img className='w-5' src={search} alt="search" />}
           </button>
         </div>
-        <button
-          className="bg-purple-600 px-3 rounded-xl"
-          onClick={getCurrentPosition}
-        >
-         Get Current Weather
-        </button>
+
+        <div className=" flex justify-center mt-1  ">
+          <button className='bg-purple-700 rounded-xl hover:bg-slate-400 px-10' onClick={getCurrentPosition}>Get Current Weather</button>
+        </div>
       </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </>

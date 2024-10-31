@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import Heading from "./component/Heading.jsx";
 import "./index.css";
 import { FetchweatherUsingGeolocation, airIndex, Fetchforecast } from "./api/Fetchweatherinfo";
@@ -6,9 +6,8 @@ import { weatherContext } from "./ContextApi/WeatherContext.jsx";
 import InfoPanel from "./component/InfoPanel.jsx";
 
 function App() {
-  const { setWeatherData, setForcastData, setAirIndex, setCityname, } = useContext(weatherContext);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { setWeatherData, setForcastData, setAirIndex, setCityname, setError, setIsLoading } = useContext(weatherContext);
+
 
   useEffect(() => {
     const getOnLoad = async () => {
@@ -42,12 +41,7 @@ function App() {
 
   return (
     <div className="h-screen mt-3 p-3">
-      <Heading
-        error={error}
-        setIsLoading={setIsLoading}
-        isLoading={isLoading}
-        setError={setError}
-      />
+      <Heading/>
       <InfoPanel />
     </div>
   );
