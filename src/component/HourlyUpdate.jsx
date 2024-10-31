@@ -12,28 +12,29 @@ const HourlyUpdate = ({ ForcastData }) => {
     };
 
     return (
-        <div className=" h-2/4 bg-purple-300 rounded-2xl ">
-            <div className='mx-4 p-2 font-bold text-xl'>Hourly Updates</div>
-            <div className=' flex  '>
-                {ForcastData.Hourlyforecast.map((data, index) => {
-                    // Get the time for the current forecast item
-                    const time = getTime(data.dt_txt);
+        <div className="  bg-purple-300 rounded-2xl ">
+            <div className='mt-3 mx-2 p-2 font-bold text-xl '>Hourly Updates</div>
 
-                    return (
-                        <div key={index} className=' md:w-[15%] flex  bg-slate-700 shadow-md rounded-xl mx-auto md:mt-10 p-5'>
-                            <div className="flex flex-col ">
-                                <div className="text-sm font-bold">{time}</div>
-                                <img
-                                    src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
-                                    alt={data.weather[0].description}
-                                />
-                                <div className="text-sm lg:text-lg font-bold">{data.main.temp}°C</div>
-                            </div>
+            {ForcastData.Hourlyforecast.map((data, index) => {
+                // Get the time for the current forecast item
+                const time = getTime(data.dt_txt);
+
+                return (
+                    <div className=' inline-grid  m-5 p-1 rounded-lg bg-white text-center '>
+                        <div className='grid justify-evenly items-center' key={index} >
+
+                            <div className="text-sm font-bold">{time}</div>
+                            <img className=''
+                                src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
+                                alt={data.weather[0].description}
+                            />
+                            <div className="text-sm lg:text-lg font-bold">{data.main.temp}°C</div>
                         </div>
-                    );
-                })}
-            </div>
+                    </div>
+                );
+            })}
         </div>
+
     );
 };
 

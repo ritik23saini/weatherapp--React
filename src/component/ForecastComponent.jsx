@@ -3,9 +3,9 @@ import React from 'react';
 const ForecastComponent = ({ ForcastData }) => {
   return (
     <div className=" bg-purple-200 lg:text-lg pb-1 rounded-2xl ">
-      <div className='font-bold m-3 '>5 Day Forecast</div>
+      <div className='font-bold m-4 '>5 Day Forecast</div>
       <hr className="mx-4" />
-      <div>
+      <div className='p-1'>
         {
           ForcastData.Forcast5days.map((data, index) => {
             // Convert timestamp to readable date and day
@@ -14,9 +14,9 @@ const ForecastComponent = ({ ForcastData }) => {
             const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 
             return (
-              <div key={index} className=" flex justify-around items-center md:grid m-3 p-2 bg-white rounded-lg shadow-lg text-lg md:text-base lg:text-xl ">
+              <div key={index} className="justify-around items-center m-3 p-2 bg-white rounded-lg shadow-lg  ">
                 <div>{day}, {formattedDate}</div>
-                <div className=" flex md:items-centeritems-center">
+                <div className=" flex md:items-center items-center">
                   <div className=" font-bold">{data.main.temp}°C</div>
                   <img
                     src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}

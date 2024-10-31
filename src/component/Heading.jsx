@@ -19,6 +19,7 @@ const Heading = ({ cityName, setIsLoading, isLoading, setCityname, error, setErr
       const forcastdata = weatherdata ? await Fetchforecast() : null;
       const airindexdata = weatherdata ? await airIndex() : null;
 
+      
       setIsLoading(false);
 
       if (weatherdata && forcastdata && airindexdata) {

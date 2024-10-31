@@ -48,10 +48,13 @@ function App() {
     };
 
     getonload();
+    return () => {
+      //clean up needed 
+    }
   }, []);
 
   return (
-    <div className=" mt-3 p-3">
+    <div className=" h-screen mt-3 p-3">
       <Heading
         cityName={cityName}
         setCityname={setCityname}
@@ -65,8 +68,8 @@ function App() {
       />
       {/* Info Panel */}
       {weatherData && (
-        <div className='  mt-3 py-1 md:grid md:grid-cols-6 gap-1'>
-          <div className="  h-[60%] m-4 md:col-span-2 xl:col-span-1">
+        <div className=' max-h-fit mt-3 py-1 md:grid md:grid-cols-6 gap-1'>
+          <div className=" m-4 md:col-span-2 xl:col-span-1">
             <WeatherInfo weatherData={weatherData} />
             <ForecastComponent ForcastData={ForcastData} />
           </div>
