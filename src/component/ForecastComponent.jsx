@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react'
+import { weatherContext } from "../ContextApi/WeatherContext.jsx";
 
-const ForecastComponent = ({ ForcastData }) => {
+const ForecastComponent = () => {
+  const { ForcastData } = useContext(weatherContext);
+
   return (
     <div className=" bg-purple-200 lg:text-lg pb-1 rounded-2xl ">
       <div className='font-bold m-4 '>5 Day Forecast</div>
       <hr className="mx-4" />
       <div className='p-1'>
         {
-          ForcastData.Forcast5days.map((data, index) => {
+          ForcastData?.Forcast5days?.map((data, index) => {
             // Convert timestamp to readable date and day
             const date = new Date(data.dt * 1000);
             const day = date.toLocaleDateString('en-US', { weekday: 'long' });

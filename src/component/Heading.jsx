@@ -1,8 +1,38 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import search from "../assets/search.svg";
-import FetchweatherUsingcity, { WeatherUsingGeolocation, airIndex, Fetchforecast } from "../api/Fetchweatherinfo";
+import { FetchweatherUsingcity, FetchweatherUsingGeolocation, airIndex, Fetchforecast } from "../api/Fetchweatherinfo";
+import { weatherContext } from '../ContextApi/WeatherContext';
 
-const Heading = ({ cityName, setIsLoading, isLoading, setCityname, error, setError, setWeatherData, setForcastData, setAirIndex }) => {
+const Heading = ({ setIsLoading, isLoading, error, setError }) => {
+
+  const { setWeatherData, setForcastData, setAirIndex, cityName, setCityname } = useContext(weatherContext);
+
+  const getCurrentPosition = async () => {
+
+    setIsLoading(true);
+    try {
+      const weatherdata = await FetchweatherUsingGeolocation();
+      const forcastdata = weatherdata ? await Fetchforecast() : null;
+      const airindexdata = weatherdata ? await airIndex() : null;
+
+      setIsLoading(false);
+
+      if (weatherdata && forcastdata && airindexdata) {
+        setWeatherData(weatherdata);
+        setForcastData(forcastdata);
+        setAirIndex(airindexdata);
+        setCityname(weatherdata.name)
+
+      }
+      else {
+        setError('Unable to fetch data.');
+        return;
+      }
+    } catch (err) {
+      setIsLoading(false);
+      setError('An error occurred while fetching data.');
+    }
+  }
 
 
   const handleSearch = async () => {
@@ -10,24 +40,25 @@ const Heading = ({ cityName, setIsLoading, isLoading, setCityname, error, setErr
       setError('Please enter a valid city');
       return;
     }
-
     setError(null);
     setIsLoading(true);
 
     try {
-      const weatherdata = await FetchweatherUsingcity(cityName) || null;
+      const weatherdata = await FetchweatherUsingcity(cityName);
       const forcastdata = weatherdata ? await Fetchforecast() : null;
       const airindexdata = weatherdata ? await airIndex() : null;
 
-      
       setIsLoading(false);
 
       if (weatherdata && forcastdata && airindexdata) {
         setWeatherData(weatherdata);
         setForcastData(forcastdata);
         setAirIndex(airindexdata);
-      } else {
+
+      }
+      else {
         setError('Unable to fetch data.');
+        return;
       }
     } catch (err) {
       setIsLoading(false);
@@ -37,7 +68,7 @@ const Heading = ({ cityName, setIsLoading, isLoading, setCityname, error, setErr
 
   return (
     <>
-      <div className="flex justify-between p-1 items-center" >
+      <div className="inline-grid gap-2 sm:flex sm:justify-between sm:p-1 sm:items-center" >
         <a href="/" className="text-white text-3xl font-bold">Weather App</a>
         <div className="flex justify-center rounded-lg bg-white items-center px-3">
           <input
@@ -54,12 +85,12 @@ const Heading = ({ cityName, setIsLoading, isLoading, setCityname, error, setErr
             onClick={handleSearch}
             disabled={isLoading}
           >
-            {isLoading ? 'Loading...'/* <Skeleton/> */ : <img className='w-5' src={search} alt="search" />}
+            {isLoading ? 'Loading...' : <img className='w-5' src={search} alt="search" />}
           </button>
         </div>
         <button
-          className="bg-purple-600 px-2 rounded-lg"
-          onClick={WeatherUsingGeolocation}
+          className="bg-purple-600 px-3 rounded-xl"
+          onClick={getCurrentPosition}
         >
           Get location
         </button>

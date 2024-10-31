@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react'
+import { weatherContext } from "../ContextApi/WeatherContext.jsx"; //
+
 import humidity from '../assets/humidity.png';
 import sunrise from '../assets/sunrise.png';
 import sunset from '../assets/sunset.png';
@@ -6,7 +8,9 @@ import pressure from '../assets/pressure.png';
 import airIndex from '../assets/airIndex.png';
 import visibility from '../assets/view.png'
 
-const Highlights = ({ weatherData, AirIndex }) => {
+const Highlights = () => {
+    const { weatherData, AirIndex } = useContext(weatherContext);
+
     // Function to convert UNIX timestamp to a readable time
     const convertToTime = (unixTimestamp) => {
         const date = new Date(unixTimestamp * 1000); // Convert from seconds to milliseconds
@@ -14,8 +18,10 @@ const Highlights = ({ weatherData, AirIndex }) => {
     }
 
     return (
-        <div className="   bg-purple-500 rounded-2xl ">
+        <div className=" bg-purple-500 rounded-2xl ">
             <div className=' text-xl font-bold p-2 mx-3 '>Today's Highlight</div>
+
+
 
             <div className=' md:grid grid-flow-col text-lg p-2 '>
                 <div className=' bg-slate-700 m-3 p-4 rounded-2xl  '>
@@ -31,6 +37,7 @@ const Highlights = ({ weatherData, AirIndex }) => {
                         </div>
                     </div>
                 </div>
+
                 <div className=' bg-slate-700  m-3 p-4 rounded-2xl'>
 
                     <p className='font-bold text-center'>Air Quality index:</p>
@@ -45,7 +52,7 @@ const Highlights = ({ weatherData, AirIndex }) => {
                     </div>
                 </div>
             </div>
-            
+
             <div className=' p-3 inline-flex md:grid md:grid-flow-col gap-2 text-center'>
 
                 <div className=' bg-slate-700 m-1 p-1 md:p-5  rounded-2xl'>
@@ -63,7 +70,10 @@ const Highlights = ({ weatherData, AirIndex }) => {
                 </div>
 
             </div>
+
+
         </div>
+
     );
 }
 
