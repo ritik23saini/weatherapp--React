@@ -92,7 +92,7 @@ const Heading = ({ setIsLoading, isLoading, error, setError }) => {
           className="bg-purple-600 px-3 rounded-xl"
           onClick={getCurrentPosition}
         >
-          Get location
+         Get Current Weather
         </button>
       </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
