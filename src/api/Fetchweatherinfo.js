@@ -1,3 +1,5 @@
+import { data } from "autoprefixer";
+
 const API_key = "0ee78a69ea7e7dca9ae21eefe15eabe2";
 let lat = '', lon = '';
 // Function to fetch weather data using city name
@@ -12,11 +14,9 @@ export const FetchweatherUsingcity = async (cityname) => {
     }
 
     const data = await response.json();
-    console.log('Current Weather Data:', data);
 
     lat = data.coord.lat;
     lon = data.coord.lon;
-    console.log('Data Fetch success');
     return data;
   }
 
@@ -47,19 +47,20 @@ export const FetchweatherUsingGeolocation = async () => {
     }
     const reverseGeocoding = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_key}`);
     const data = await reverseGeocoding.json();
-    console.log(data)
     return data;
 
   } catch (err) {
+
     if (err.code === err.PERMISSION_DENIED) {
       alert('Location access denied. Please enable location permissions.');
     } else if (err.code === err.POSITION_UNAVAILABLE) {
-      alert('Location unavailable. Please check your network or GPS.');
+      alert('Location unavailable. Please check your network/browser version or GPS .');
     } else if (err.code === err.TIMEOUT) {
       alert('Location request timed out. Please try again.');
     } else {
       alert('An unknown error occurred while fetching location.');
     }
+    alert('Default Location set to Delhi')
   }
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import Heading from "./component/Heading.jsx";
 import "./index.css";
-import { FetchweatherUsingGeolocation, airIndex, Fetchforecast } from "./api/Fetchweatherinfo";
+import { FetchweatherUsingGeolocation, airIndex, Fetchforecast, FetchweatherUsingcity } from "./api/Fetchweatherinfo";
 import { weatherContext } from "./ContextApi/WeatherContext.jsx";
 import InfoPanel from "./component/InfoPanel.jsx";
 
@@ -15,7 +15,7 @@ function App() {
       setIsLoading(true);
 
       try {
-        const weatherdata = await FetchweatherUsingGeolocation();
+        const weatherdata = await FetchweatherUsingGeolocation() || await FetchweatherUsingcity('Delhi');
         const forecastdata = weatherdata ? await Fetchforecast() : null;
         const airindexdata = weatherdata ? await airIndex() : null;
 
@@ -41,7 +41,7 @@ function App() {
 
   return (
     <div className="h-screen mt-3 p-3">
-      <Heading/>
+      <Heading />
       <InfoPanel />
     </div>
   );
